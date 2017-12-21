@@ -3,12 +3,34 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import { browserHistory } from 'react-router';
 import promise from 'redux-promise'
 import logger from 'redux-logger'
+import promiseMiddleware from './middleware'
 import { combineReducers } from 'redux';
 const state = {
-    counter : {
-        value: 0
+    counter: {
+        value:0
+    },
+    fantasyTeams : {
+        list:[]
     }
 }
+
+function fantasyTeams(state={}, action) {
+    switch(action.type) {
+        case 'TOURNAMENTS_LOADING_STARTED':
+            console.log('loading_started');
+            break;
+        case 'TOURNAMENTS_LOADING_FINISHED':
+            return {...state, list: [...action.teams]};
+        case 'TOURNAMENTS_LOADING_FAILED':
+            console.error(action.error)
+            break;
+        default:
+            break;
+    }
+    return state;
+}
+
+
 
 function counter (state={}, action){
     switch(action.type) {
@@ -23,13 +45,13 @@ function counter (state={}, action){
 }
 let reducers = combineReducers({
     routing: routerReducer, 
-    counter
+    counter,
+    fantasyTeams
 })
 
-let storeWithMiddleWare = applyMiddleware(promise, logger)(createStore)
+let storeWithMiddleWare = applyMiddleware(promiseMiddleware, promise, logger)(createStore)
 
 const store = storeWithMiddleWare(reducers, state)
-
 
 export const history = syncHistoryWithStore(browserHistory, store)
 
