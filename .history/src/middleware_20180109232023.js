@@ -1,6 +1,6 @@
 const middleware = store => next => action => {
-  if(action.type !== 'PROMISE') return next(action)
-  const [started, loaded, failed] = action.actions
+  if (action.type !== 'PROMISE') return next(action) 
+  const [started, loaded, failed] = action.actions 
   store.dispatch({
     type: started
   })

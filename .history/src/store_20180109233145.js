@@ -17,7 +17,7 @@ function fantasyTeams(state={}, action) {
             console.log('loading_started');
             break;
         case 'TOURNAMENTS_LOADING_FINISHED':
-            return {...state, list: [...action.tournaments]};
+            return { ...state, list: [...action.tournaments] };
         case 'TOURNAMENTS_LOADING_FAILED':
             console.error(action.error)
             break;
@@ -26,6 +26,10 @@ function fantasyTeams(state={}, action) {
     }
     return state;
 }
+
+
+
+
 let reducers = combineReducers({
     routing: routerReducer, 
     fantasyTeams

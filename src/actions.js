@@ -1,16 +1,13 @@
-import Base from './base';
-
-export const INCREASE_COUNTER = 'INCREASE_COUNTER';
-export const RESET_COUNTER = 'RESET_COUNTER';
-
-
-export const increaseCounter = () => ({counter:1, type:INCREASE_COUNTER});
-
-export const resetCounter = () => ({counter:0, type:RESET_COUNTER});
-
-export const loadTournaments = (param1, param2) => ({
+export const loadTournaments = () => ({
   type: 'PROMISE',
-  actions: ['TOURNAMENTS_LOADING_STARTED', 'TOURNAMENTS_LOADING_FINISHED', 'TOURNAMENTS_LOADING_FAILED'],
-  promise: Base.load(param1, param2)
+  actions: [
+    'TOURNAMENTS_LOADING_STARTED',
+    'TOURNAMENTS_LOADING_FINISHED',
+    'TOURNAMENTS_LOADING_FAILED'
+  ],
+  promise: fetch(
+    'https://ws.fanteam.com/match_collections?sport=football&tab=admin_created&statuses[]=waiting&statuses[]=in_progress&statuses[]=pending_confirmation&statuses[]=closed&statuses[]=cancelled&page=0&per_page=30&bearer[white_label]=fanteam'
+  )
+    .then(res => res.json())
+    .catch(error => error)
 });
-

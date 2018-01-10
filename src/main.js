@@ -6,7 +6,6 @@ import App from './App';
 
 const mapStateToProps = (state) => {
   return {
-    counter: state.counter,
     fantasyTeams: state.fantasyTeams,
     routing: state.routing
   }
